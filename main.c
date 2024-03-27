@@ -1,43 +1,73 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ABP.h"
+#include "AVL.h"
 
-int main()
+int main(int argc, char **argv)
 {
-    PONT raiz = inicializa();
-    int opcao, chave;
+    PONT r;
+    int v, b, n;
+    int continuar = 1;
 
     do
     {
-        printf("\nMenu de Operações - Árvore AVL\n");
-        printf("1. Inserir chave\n");
-        printf("2. Exibir árvore (simplificado)\n");
-        printf("3. Sair\n");
-        printf("Escolha uma opção: ");
-        scanf("%d", &opcao);
+        printf("\n\tMenu de Opcao\n\n");
+        printf("1. Inicializa a arvore \n");
+        printf("2. Insere na arvore\n");
+        printf("3. Buscar um valor na arvore\n");
+        printf("4. Conta o numero de nos da arvore\n");
+        printf("5. Imprime a arvore\n");
+        printf("6. Remove um no da arvore\n");
+        printf("0. Sair\n");
 
-        switch (opcao)
+        scanf("%d", &continuar);
+        system("cls || clear");
+
+        switch (continuar)
         {
         case 1:
-            printf("Digite a chave a ser inserida: ");
-            scanf("%d", &chave);
-            raiz = adicionaAVL(raiz, criaNovoNo(chave));
-            printf("Chave %d inserida.\n", chave);
+            r = inicializa();
+            printf("Arvore criada com sucesso");
             break;
 
         case 2:
-            printf("Árvore AVL (Formato Simplificado):\n");
-            exibirArvore(raiz); // Esta função precisa ser implementada de acordo com a estrutura da sua árvore
+            printf("Digite um numero para inserir na arvore:");
+            scanf("%d", &v);
+            PONT no = criaNo(v);
+            r = insere(r, v);
+            printf("No inserido com sucesso");
             break;
 
         case 3:
-            printf("Saindo...\n");
+            printf("Digite um valor para pesquisar na arvore");
+            scanf("%d", &b);
+            PONT resultado = contem(b, r);
+            if (resultado == NULL)
+                printf("O valor %d nao foi localizado\n", b);
+            else
+                printf("O valor %d foi localizado na arvore\n", b);
             break;
 
-        default:
-            printf("Opção inválida!\n");
-        }
-    } while (opcao != 3);
+        case 4:
+            n = numeroNos(r);
+            printf("A arvore possui: %d nos\n", n);
+            break;
 
+        case 5:
+            exibirArvore(r);
+            break;
+
+        case 6:
+            printf("Digite um valor para remover da arvore:");
+            scanf("%d", &v);
+            r = removeNo(r, v);
+            printf("Valor removido com sucesso");
+            break;
+
+        case 0:
+            break;
+        default:
+            printf("Digite uma opcao valida\n");
+        }
+    } while (continuar != 0);
     return 0;
 }
